@@ -123,21 +123,16 @@ class _ScheduleNo1ScreenState extends State<ScheduleNo1Screen> {
 class CustomSubmitButton extends StatelessWidget {
   final String title;
   final Widget? routeTo;
+  VoidCallback? ontap;
   CustomSubmitButton({
     required this.title,
     this.routeTo,
+    this.ontap,
   });
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        routeTo == null
-            ? SizedBox()
-            : Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => routeTo!),
-              );
-      },
+      onTap: ontap,
       child: Container(
         width: 266.w,
         height: 44.h,
@@ -179,6 +174,8 @@ class CustomTextFieldWidget extends StatelessWidget {
   final double? width;
   final double? height;
   final double? titleFontSize;
+  final double? sizedBoxHeight;
+  TextEditingController? controller = TextEditingController();
 
   CustomTextFieldWidget({
     required this.hint,
@@ -186,6 +183,8 @@ class CustomTextFieldWidget extends StatelessWidget {
     this.titleFontSize,
     this.height,
     this.width,
+    this.controller,
+    this.sizedBoxHeight,
   });
 
   @override
@@ -194,13 +193,17 @@ class CustomTextFieldWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: GoogleFonts.roboto(
-              fontSize: titleFontSize == null ? 12.sp : titleFontSize,
-              color: blackColor,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5.w),
+            child: Text(
+              title,
+              style: GoogleFonts.roboto(
+                fontSize: titleFontSize == null ? 12.sp : titleFontSize,
+                color: blackColor,
+              ),
             ),
           ),
+          SizedBox(height: sizedBoxHeight == null ? 5.h : sizedBoxHeight),
           Container(
             width: width == null ? 304.w : width,
             height: height == null ? 38.h : height,
@@ -210,10 +213,14 @@ class CustomTextFieldWidget extends StatelessWidget {
               color: greyColor.withOpacity(0.1),
             ),
             child: TextField(
+              controller: controller,
               maxLines: 4,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
                 hintText: hint,
+                hintStyle: TextStyle(
+                  fontSize: 12.sp,
+                ),
                 border: InputBorder.none,
               ),
             ),
@@ -347,8 +354,10 @@ class ScheduleNo1ScreenText extends StatelessWidget {
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final double? titleFontSize;
+  VoidCallback? ontap;
   CustomAppBar({
     required this.title,
+    this.ontap,
     this.titleFontSize,
   });
 
@@ -357,17 +366,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: Container(
-              height: 20.h,
+    return GestureDetector(
+      onTap: ontap,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: 25.h,
               width: 25.h,
               decoration: BoxDecoration(
                 color: whiteColor,
@@ -387,23 +394,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
             ),
-          ),
-          Text(
-            title,
-            style: GoogleFonts.roboto(
-              fontSize: titleFontSize == null ? 16.sp : titleFontSize,
-              color: blueColor,
+            Text(
+              title,
+              style: GoogleFonts.roboto(
+                fontSize: titleFontSize == null ? 16.sp : titleFontSize,
+                color: blueColor,
+              ),
             ),
-          ),
-          Container(
-            height: 20.h,
-            width: 25.h,
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(5.r),
+            Container(
+              height: 20.h,
+              width: 25.h,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(5.r),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

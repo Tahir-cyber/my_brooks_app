@@ -13,7 +13,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: Size(325, 674),
-      builder: () => Container(
+      builder: (_,child) => Container(
         color: Colors.white,
         child: SafeArea(
           child: Scaffold(

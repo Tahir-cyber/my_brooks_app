@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "137175475788",
+    "project_id": "my-brook-app",
+    "storage_bucket": "my-brook-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137175475788:android:c757baf26e8021436976e9",
+        "android_client_info": {
+          "package_name": "com.example.brooks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "137175475788-bddebh6e5fktmhvijaiid2t28v755335.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.brooks",
+            "certificate_hash": "e7e96ccdd13c0c9663cce60862987725b69f37b4"
+          }
+        },
+        {
+          "client_id": "137175475788-j9qv2ag4o8qbqhqcf1lpj0i8slgnstln.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3kBXxNU5Q2A_AQbqN8Dx54ECZnULVCfM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "137175475788-j9qv2ag4o8qbqhqcf1lpj0i8slgnstln.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

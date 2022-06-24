@@ -2,6 +2,7 @@ import 'package:brooks/views/CompanyInfo/CompanyInfo.dart';
 import 'package:brooks/views/ScheduleNo1Screen/ScheduleNo1Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class LookingForFundsScreen extends StatelessWidget {
   @override
@@ -10,6 +11,9 @@ class LookingForFundsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: CustomAppBar(
           title: 'Looking for Funding',
+          ontap: () {
+            Navigator.pop(context);
+          },
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -25,9 +29,10 @@ class LookingForFundsScreen extends StatelessWidget {
               ),
               Spacer(),
               CustomSubmitButton(
-                title: 'Get Started',
-                routeTo: CompanyInfo(),
-              ),
+                  title: 'Get Started',
+                  ontap: () {
+                    Get.to(CompanyInfo());
+                  }),
               SizedBox(height: 100)
             ],
           ),
