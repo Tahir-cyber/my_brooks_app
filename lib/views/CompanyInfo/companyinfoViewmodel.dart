@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+String? docId;
+
 class ComapnyInfoViewModel extends ChangeNotifier {
   bool loading = false;
   uploadDataToFirebase({
@@ -23,7 +25,7 @@ class ComapnyInfoViewModel extends ChangeNotifier {
   }) async {
     loading = true;
     notifyListeners();
-    
+
     await FirebaseFirestore.instance.collection("LoanForm").add({
       "companyName": companyName,
       "dba": dba,
@@ -39,10 +41,10 @@ class ComapnyInfoViewModel extends ChangeNotifier {
       "businessForm": businessForm,
     }).then((value) {
       log("Company Info Uploaded");
+      docId = value.id;
       Get.to(AccountsRecievableInformationScreen());
     });
     loading = false;
     notifyListeners();
   }
-
 }

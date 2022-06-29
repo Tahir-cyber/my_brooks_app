@@ -1,9 +1,11 @@
+import 'package:brooks/PdfWidget/pdfWidgetViewModel.dart';
 import 'package:brooks/constants/Colors.dart';
 import 'package:brooks/views/CreditReleaseScreen/CreditReleaseScreen.dart';
 import 'package:brooks/views/ScheduleNo1Screen/ScheduleNo1Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class HardMoneyFinancingScreen extends StatelessWidget {
   @override
@@ -23,6 +25,7 @@ class HardMoneyFinancingScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20.h),
                 UploadDocumentWidget(
+                  onTap: () {},
                   title: 'Credit release',
                   subtitle: 'Sign and return',
                 ),
@@ -111,85 +114,151 @@ class UploadDocumentWidget extends StatelessWidget {
   final String? subtitle;
   final double? titleFontSize;
   final double? subtitleFontSize;
+  final VoidCallback? onTap;
 
   UploadDocumentWidget({
     this.subtitle,
     this.subtitleFontSize,
+    this.onTap,
     required this.title,
     this.titleFontSize,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 325.w,
-      height: 55.h,
-      padding: EdgeInsets.symmetric(horizontal: 10.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.r),
-        color: blueColor.withOpacity(0.1),
+    final pdfModel = Provider.of<PdfWidgetViewModel>(context);
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        elevation: 0,
+        color: greyColor.withOpacity(0.2),
+        margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+          child: Row(
+            children: [
+              Icon(
+                Icons.attach_file,
+                size: 20.sp,
+                color: greyColor,
+              ),
+              SizedBox(width: 20.w),
+              Container(
+                width: 200.w,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: GoogleFonts.roboto(
+                        fontSize: titleFontSize == null ? 14.sp : titleFontSize,
+                      ),
+                    ),
+                    subtitle == null
+                        ? SizedBox(height: 1.h)
+                        : SizedBox(
+                            height: 0.h,
+                          ),
+                    subtitle == null
+                        ? SizedBox(
+                            height: 0,
+                            width: 0,
+                          )
+                        : Text(
+                            subtitle!,
+                            style: GoogleFonts.roboto(
+                              fontSize: subtitleFontSize == null
+                                  ? 11.sp
+                                  : subtitleFontSize,
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+              Spacer(),
+              Container(
+                width: 25.w,
+                height: 25.h,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: whiteColor,
+                  boxShadow: [
+                    BoxShadow(
+                      color: greyColor,
+                      spreadRadius: 0.1,
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Icon(Icons.file_upload_outlined),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
-      child: Row(
-        children: [
-          Icon(
-            Icons.attach_file,
-            size: 20.sp,
-            color: greyColor,
-          ),
-          SizedBox(width: 20.w),
-          Container(
-            width: 200.w,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: GoogleFonts.roboto(
-                    fontSize: titleFontSize == null ? 14.sp : titleFontSize,
+    );
+  }
+}
+
+class UploadDocumentWidget2 extends StatelessWidget {
+  final Widget? Column;
+
+  final String? subtitle;
+  final double? titleFontSize;
+  final double? subtitleFontSize;
+  final VoidCallback? onTap;
+
+  UploadDocumentWidget2({
+    this.Column,
+    this.subtitle,
+    this.subtitleFontSize,
+    this.onTap,
+    this.titleFontSize,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final pdfModel = Provider.of<PdfWidgetViewModel>(context);
+    return Card(
+      elevation: 0,
+      color: greyColor.withOpacity(0.2),
+      margin: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.r),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+        child: Row(
+          children: [
+            Column!,
+            Spacer(),
+            Container(
+              width: 25.w,
+              height: 25.h,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: whiteColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: greyColor,
+                    spreadRadius: 0.1,
+                    blurRadius: 5,
                   ),
-                ),
-                subtitle == null
-                    ? SizedBox(height: 1.h)
-                    : SizedBox(
-                        height: 0.h,
-                      ),
-                subtitle == null
-                    ? SizedBox(
-                        height: 0,
-                        width: 0,
-                      )
-                    : Text(
-                        subtitle!,
-                        style: GoogleFonts.roboto(
-                          fontSize: subtitleFontSize == null
-                              ? 11.sp
-                              : subtitleFontSize,
-                        ),
-                      ),
-              ],
-            ),
-          ),
-          Spacer(),
-          Container(
-            width: 25.w,
-            height: 25.h,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: whiteColor,
-              boxShadow: [
-                BoxShadow(
-                  color: greyColor,
-                  spreadRadius: 0.1,
-                  blurRadius: 5,
-                ),
-              ],
-            ),
-            child: Center(
-              child: Icon(Icons.file_upload_outlined),
-            ),
-          )
-        ],
+                ],
+              ),
+              child: Center(
+                child: GestureDetector(
+                    onTap: onTap, child: Icon(Icons.file_upload_outlined)),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

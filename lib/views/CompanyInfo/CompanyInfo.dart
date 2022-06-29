@@ -16,8 +16,8 @@ class CompanyInfo extends StatefulWidget {
 }
 
 class _CompanyInfoState extends State<CompanyInfo> {
-  final _formKey = GlobalKey<FormState>();
-  TextEditingController companyNameController = TextEditingController();
+ 
+  final companyNameController = TextEditingController();
   final dbaController = TextEditingController();
   final contactPersonController = TextEditingController();
   final addressController = TextEditingController();
@@ -166,38 +166,38 @@ class _CompanyInfoState extends State<CompanyInfo> {
                           )
                         : CustomSubmitButton(
                             title: 'CONTINUE',
-                            ontap: () {
-                              Get.to(AccountsRecievableInformationScreen());
-                              // model.uploadDataToFirebase(
-                              //     companyName:
-                              //         companyNameController.text.toString(),
-                              //     dba: dbaController.text,
-                              //     contactPerson: contactPersonController.text,
-                              //     address: addressController.text,
-                              //     phoneNumber: phoneController.text,
-                              //     fax: faxController.text,
-                              //     email: emailController.text,
-                              //     typeOfBusiness: typeOfBusinessController.text,
-                              //     businessStartDate:
-                              //         businessStartedController.text,
-                              //     stateOfIncorporation:
-                              //         stateOfIncorportionController.text,
-                              //     numberOfEmployees:
-                              //         numberOfEmployeeController.text,
-                              //     businessForm: formValue!);
-                              // print("formValue: ${companyNameController}");
+                            ontap: () async{
+                            
+                             await model.uploadDataToFirebase(
+                                  companyName:
+                                      companyNameController.text,
+                                  dba: dbaController.text,
+                                  contactPerson: contactPersonController.text,
+                                  address: addressController.text,
+                                  phoneNumber: phoneController.text,
+                                  fax: faxController.text,
+                                  email: emailController.text,
+                                  typeOfBusiness: typeOfBusinessController.text,
+                                  businessStartDate:
+                                      businessStartedController.text,
+                                  stateOfIncorporation:
+                                      stateOfIncorportionController.text,
+                                  numberOfEmployees:
+                                      numberOfEmployeeController.text,
+                                  businessForm: formValue!);
+                              print("formValue: ${companyNameController}");
 
-                              // companyNameController.clear();
-                              // dbaController.clear();
-                              // contactPersonController.clear();
-                              // addressController.clear();
-                              // phoneController.clear();
-                              // faxController.clear();
-                              // emailController.clear();
-                              // typeOfBusinessController.clear();
-                              // businessStartedController.clear();
-                              // stateOfIncorportionController.clear();
-                              // numberOfEmployeeController.clear();
+                              companyNameController.clear();
+                              dbaController.clear();
+                              contactPersonController.clear();
+                              addressController.clear();
+                              phoneController.clear();
+                              faxController.clear();
+                              emailController.clear();
+                              typeOfBusinessController.clear();
+                              businessStartedController.clear();
+                              stateOfIncorportionController.clear();
+                              numberOfEmployeeController.clear();
                             },
                           ),
                     SizedBox(height: 100.h),

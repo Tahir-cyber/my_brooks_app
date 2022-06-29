@@ -17,12 +17,25 @@ class AccountsRecievableInformationScreen extends StatefulWidget {
 
 class _AccountsRecievableInformationScreenState
     extends State<AccountsRecievableInformationScreen> {
+  final noOfActiveCustomerController = TextEditingController();
+  final noOfInvPerMonthController = TextEditingController();
+  final noOfSellingTermsController = TextEditingController();
+  final averageMonthlySaleController = TextEditingController();
+  final annualSaleController = TextEditingController();
+  final monthlyBillingController = TextEditingController();
+  final docRequireFrmCustomer = TextEditingController();
+  final factorWithController = TextEditingController();
+  final reasonForLeavingController = TextEditingController();
+  final lawsuitExplanController = TextEditingController();
+  final lenderAmountController = TextEditingController();
   bool extendedTermsOption = true;
   bool purchaseOrderOption = true;
+  bool purchaseOrderOption2 = true;
   bool submittingInvoice = true;
   bool pendingLawSuits = true;
   bool outstandingLoans = true;
   String receivablesChoiceControllerr = "Goods";
+  String? boolAsString;
 
   @override
   Widget build(BuildContext context) {
@@ -49,16 +62,19 @@ class _AccountsRecievableInformationScreenState
                   CustomTextFieldWidget(
                     hint: 'Customers',
                     title: 'Number of Active Customers:',
+                    controller: noOfActiveCustomerController,
                   ),
                   SizedBox(height: 15.h),
                   CustomTextFieldWidget(
                     hint: 'Invoices per month:',
                     title: 'Number of invoices per month:',
+                    controller: noOfInvPerMonthController,
                   ),
                   SizedBox(height: 15.h),
                   CustomTextFieldWidget(
                     hint: 'Normal Selling Terms',
                     title: 'Normal Selling Terms (30, 60, 90 days)',
+                    controller: noOfSellingTermsController,
                   ),
                   SizedBox(height: 15.h),
                   YesNoOptionWidget(
@@ -69,16 +85,19 @@ class _AccountsRecievableInformationScreenState
                   CustomTextFieldWidget(
                     hint: 'Sales Volume in \$',
                     title: 'What is your Average Monthly Sales Volume?',
+                    controller: averageMonthlySaleController,
                   ),
                   SizedBox(height: 15.h),
                   CustomTextFieldWidget(
                     hint: 'Annual sales in \$',
                     title: 'What are your Annual Sales \$',
+                    controller: annualSaleController,
                   ),
                   SizedBox(height: 15.h),
                   CustomTextFieldWidget(
                     hint: 'Amount in \$',
                     title: 'Your Monthly Billing do you wish to factor?',
+                    controller: monthlyBillingController,
                   ),
                   SizedBox(height: 15.h),
                   YesNoOptionWidget(
@@ -89,11 +108,12 @@ class _AccountsRecievableInformationScreenState
                   CustomTextFieldWidget(
                     hint: 'What other documentation?',
                     title: 'Documentations do you require from your customers?',
+                    controller: docRequireFrmCustomer,
                   ),
                   SizedBox(height: 15.h),
                   YesNoOptionWidget(
                     title: 'Do you require Purchase Orders from your Clients?',
-                    answer: purchaseOrderOption,
+                    answer: purchaseOrderOption2,
                   ),
                   SizedBox(height: 15.h),
                   CustomTextFieldWidget(
@@ -101,12 +121,15 @@ class _AccountsRecievableInformationScreenState
                     title: 'With whom did you factor?',
                     width: 250.w,
                     titleFontSize: 15.sp,
+                    controller: factorWithController,
                   ),
                   SizedBox(height: 15.h),
                   YesNoOptionWidget(
                     title: 'Are you still submitting invoices?',
                     answer: submittingInvoice,
-                    width: 260.w,
+                    width: 250.w,
+                    yesButtonWidth: 100.w,
+                    noButtonWidth: 100.w,
                   ),
                   SizedBox(height: 15.h),
                   CustomTextFieldWidget(
@@ -114,6 +137,7 @@ class _AccountsRecievableInformationScreenState
                     title: 'What was your reason for leaving?',
                     width: 250.w,
                     titleFontSize: 15.sp,
+                    controller: reasonForLeavingController,
                   ),
                   SizedBox(height: 15.h),
                   YesNoOptionWidget(
@@ -127,6 +151,7 @@ class _AccountsRecievableInformationScreenState
                     title: 'Please explain',
                     width: 250.w,
                     titleFontSize: 15.sp,
+                    controller: lawsuitExplanController,
                   ),
                   SizedBox(height: 15.h),
                   YesNoOptionWidget(
@@ -141,14 +166,62 @@ class _AccountsRecievableInformationScreenState
                         'List below the Lender Amount Outstanding Collateral',
                     width: 250.w,
                     titleFontSize: 15.sp,
+                    controller: lenderAmountController,
                   ),
                   SizedBox(height: 30.h),
-                  CustomSubmitButton(
-                    title: 'CONTINUE',
-                    ontap: () {
-                      log("${model.value}");
-                    },
-                  ),
+                  model.loading
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : CustomSubmitButton(
+                          title: 'CONTINUE',
+                          ontap: () async {
+                            await model.uploadAccountRecievableInformation(
+                                recivableGeneratedSale: model.value,
+                                NoOfActiveCustomer:
+                                    noOfActiveCustomerController.text,
+                                NumberOfInvPerMonth:
+                                    noOfInvPerMonthController.text,
+                                normalSellingTime:
+                                    noOfSellingTermsController.text,
+                                //bool extendedTermsOption,
+                                extendedTermsGranted: extendedTermsOption,
+                                monthlyAverageSaleVoume:
+                                    averageMonthlySaleController.text,
+                                annualSale: annualSaleController.text,
+                                monthlyBill: monthlyBillingController.text,
+                                //bool purchaseOrderOption & purchaseOrderOption2 & submittingInvoice,
+                                purchaseOrderFromClient: purchaseOrderOption,
+                                purchaseOrderFromClient2: purchaseOrderOption2,
+                                stillSubmittinginvoice: submittingInvoice,
+                                docReqFromCustomer: docRequireFrmCustomer.text,
+                                factorWith: factorWithController.text,
+                                reasonOfLeaving:
+                                    reasonForLeavingController.text,
+                                //bool pendingLawSuits,
+                                pendingLawSuit: pendingLawSuits,
+                                lawSuitExplain: lawsuitExplanController.text,
+                                //bool outstandingLoans,
+                                outsatndingLoan: outstandingLoans,
+                                lenderAmount: lenderAmountController.text);
+                            log("${model.value}");
+
+                            //clear all the controllers
+                            noOfActiveCustomerController.clear();
+                            noOfInvPerMonthController.clear();
+                            noOfSellingTermsController.clear();
+                            averageMonthlySaleController.clear();
+                            annualSaleController.clear();
+                            monthlyBillingController.clear();
+                            factorWithController.clear();
+                            reasonForLeavingController.clear();
+                            docRequireFrmCustomer.clear();
+                            factorWithController.clear();
+                            lawsuitExplanController.clear();
+                            lenderAmountController.clear();
+                            
+                          },
+                        ),
                   SizedBox(height: 100.h),
                 ],
               ),
@@ -165,8 +238,15 @@ class YesNoOptionWidget extends StatefulWidget {
   final String title;
   bool answer;
   final double? width;
+  final double? yesButtonWidth;
+  final double? noButtonWidth;
 
-  YesNoOptionWidget({required this.answer, required this.title, this.width});
+  YesNoOptionWidget(
+      {required this.answer,
+      required this.title,
+      this.width,
+      this.noButtonWidth,
+      this.yesButtonWidth});
 
   @override
   State<YesNoOptionWidget> createState() => _YesNoOptionWidgetState();
@@ -187,11 +267,14 @@ class _YesNoOptionWidgetState extends State<YesNoOptionWidget> {
             children: [
               GestureDetector(
                 onTap: () {
-                  setState(() {});
-                  widget.answer = true;
+                  setState(() {
+                    widget.answer = true;
+                  });
                 },
                 child: Container(
-                  width: 125.w,
+                  width: widget.yesButtonWidth != null
+                      ? widget.yesButtonWidth
+                      : 125.w,
                   height: 30.h,
                   decoration: BoxDecoration(
                     color:
@@ -211,9 +294,14 @@ class _YesNoOptionWidgetState extends State<YesNoOptionWidget> {
                 onTap: () {
                   setState(() {});
                   widget.answer = false;
+                  if (widget.answer == false) {
+                    Text("No");
+                  }
                 },
                 child: Container(
-                  width: 125.w,
+                  width: widget.noButtonWidth != null
+                      ? widget.noButtonWidth
+                      : 125.w,
                   height: 30.h,
                   decoration: BoxDecoration(
                     color:

@@ -1,7 +1,8 @@
-import 'package:brooks/views/FinancialStatement/1_FinancialStatementScreen.dart';
+import 'package:brooks/views/FinancialStatement/1_financialStatement/1_FinancialStatementScreen.dart';
 import 'package:brooks/views/ScheduleNo1Screen/ScheduleNo1Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class CommercialRealEstateChecklistScreen extends StatelessWidget {
   @override
@@ -10,6 +11,9 @@ class CommercialRealEstateChecklistScreen extends StatelessWidget {
       child: Scaffold(
         appBar: CustomAppBar(
           title: 'Commercial Real Estate Checklist',
+          ontap: () {
+            Get.back();
+          },
           titleFontSize: 14.sp,
         ),
         body: SingleChildScrollView(
