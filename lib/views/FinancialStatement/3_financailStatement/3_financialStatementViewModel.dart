@@ -3,6 +3,7 @@ import 'package:brooks/views/FinancialStatement/4_financailStatement/4_Financial
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FinancialStatementViewModel3 extends ChangeNotifier {
   bool loading = false;
@@ -24,7 +25,12 @@ class FinancialStatementViewModel3 extends ChangeNotifier {
   }) async {
     loading = true;
     notifyListeners();
-    await FirebaseFirestore.instance.collection("FinStatBalanceSheet1").add({
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await FirebaseFirestore.instance
+        .collection("LoanForm")
+        .doc("${pref.getString("uid")}")
+        .collection("FnCashIncomeAndExpendituresStament")
+        .add({
       "applicantSalary": applicantSalary,
       "coApplicantSalary": coApplicantSalary,
       "busnessAndComissionApplicant": bonusesAndComissionApplicant,
@@ -40,13 +46,6 @@ class FinancialStatementViewModel3 extends ChangeNotifier {
       "pensionIncome": pensionIncome,
       "totalExpenditure": totalExpenditure,
       "userId": userId,
-    }).then((value) async {
-      await FirebaseFirestore.instance
-          .collection("FinStatBalanceSheet1")
-          .doc(value.id)
-          .update({
-        "docId": value.id,
-      });
     }).then((value) {
       Get.to(FinancialStatementScreen_4());
     });

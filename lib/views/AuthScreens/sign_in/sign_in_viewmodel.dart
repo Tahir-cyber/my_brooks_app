@@ -1,6 +1,5 @@
 import 'package:brooks/constants/Colors.dart';
 import 'package:brooks/views/HomePage.dart';
-import 'package:brooks/views/home_page_view/home_page_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -13,28 +12,25 @@ class SignInViewModel extends ChangeNotifier {
   bool loading = false;
   String? uid;
   void logIn(email, password, context) async {
-     SharedPreferences pref;
+    SharedPreferences pref;
     try {
       loading = true;
       notifyListeners();
-
-      await _auth
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((value) {
-        uid = value.user!.uid;
-        print("this is may be uid  $uid");
-        Fluttertoast.showToast(
-            msg: "Login Successful", backgroundColor: blueColor);
-        Navigator.pushAndRemoveUntil(
-            (context),
-            MaterialPageRoute(builder: (context) =>  HomeScreen()),
-            (route) => false);
-        loading = false;
-        notifyListeners();
-        
-      });
       pref = await SharedPreferences.getInstance();
+      final response = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
       pref.setString("email", email);
+      pref.setString("uid", response.user!.uid);
+
+      print("this is may be uid  $uid");
+      Fluttertoast.showToast(
+          msg: "Login Successful", backgroundColor: blueColor);
+      Navigator.pushAndRemoveUntil(
+          (context),
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+          (route) => false);
+      loading = false;
+      notifyListeners();
     } on FirebaseAuthException catch (error) {
       loading = false;
 
@@ -74,5 +70,4 @@ class SignInViewModel extends ChangeNotifier {
       );
     }
   }
-
 }

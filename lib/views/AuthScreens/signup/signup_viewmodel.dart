@@ -1,7 +1,6 @@
 import 'package:brooks/Models/user_model.dart';
 import 'package:brooks/constants/Colors.dart';
 import 'package:brooks/views/HomePage.dart';
-import 'package:brooks/views/home_page_view/home_page_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -27,34 +26,38 @@ class SignUpViewModel extends ChangeNotifier {
       required email,
       required context,
       required password}) async {
-        SharedPreferences pref;
+    SharedPreferences pref;
     this.name = name;
     this.phone = phone;
     this.email = email;
 
     try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
       lodaing = true;
       notifyListeners();
-      await auth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) {
-        //flutter toast
-        Fluttertoast.showToast(
-            msg: "Registration Successful", backgroundColor: blueColor);
-        //post user detailed to firestore
-        UserDetailed(context);
-        //navigate to home page
-        Navigator.pushAndRemoveUntil(
-            (context),
-            MaterialPageRoute(builder: (context) => HomeScreen()),
-            (route) => false);
-             lodaing = false;
-        notifyListeners();
-      });
-       SharedPreferences pref = await SharedPreferences.getInstance();
-      pref.setString("email", email);
+      UserCredential response = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+    await  pref.setString("email", email);
+      pref.setString("uid", response.user!.uid);
+      pref.setString("name", name);
+      pref.setString("phone", phone);
+      Fluttertoast.showToast(
+          msg: "Registration Successful", backgroundColor: blueColor);
+      //post user detailed to firestore
+      UserDetailed(context);
+      //navigate to home page
+      Navigator.pushAndRemoveUntil(
+          (context),
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+          (route) => false);
+      lodaing = false;
+      notifyListeners();
+
+      //flutter toast
+
+      print("testing");
     } catch (e) {
-       lodaing = false;
+      lodaing = false;
       notifyListeners();
       errorMessage = e.toString();
       Get.snackbar(

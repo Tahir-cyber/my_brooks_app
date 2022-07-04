@@ -2,6 +2,7 @@ import 'package:brooks/views/FinancialStatement/7_FinancialStatement/7_Financial
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FinancialStatementViewModel6 extends ChangeNotifier {
   bool loading = false;
@@ -24,7 +25,12 @@ class FinancialStatementViewModel6 extends ChangeNotifier {
       required String otherAssets}) async {
     loading = true;
     notifyListeners();
-    FirebaseFirestore.instance.collection("financialStatement6").add(
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await FirebaseFirestore.instance
+        .collection("LoanForm")
+        .doc("${pref.getString("uid")}")
+        .collection("FnStatementBalanceSheet")
+        .add(
       {
         "cashInBank": cashInBank,
         "cashInOtherInstitutional": cashInOtherInstitutional,

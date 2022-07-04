@@ -1,13 +1,11 @@
 import 'dart:developer';
 
 import 'package:brooks/constants/Colors.dart';
-import 'package:brooks/views/AccountsRecievableInformation/AccountsRecievableInformationScreen.dart';
 import 'package:brooks/views/CompanyInfo/companyinfoViewmodel.dart';
 import 'package:brooks/views/ScheduleNo1Screen/ScheduleNo1Screen.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class CompanyInfo extends StatefulWidget {
@@ -16,7 +14,6 @@ class CompanyInfo extends StatefulWidget {
 }
 
 class _CompanyInfoState extends State<CompanyInfo> {
- 
   final companyNameController = TextEditingController();
   final dbaController = TextEditingController();
   final contactPersonController = TextEditingController();
@@ -166,11 +163,9 @@ class _CompanyInfoState extends State<CompanyInfo> {
                           )
                         : CustomSubmitButton(
                             title: 'CONTINUE',
-                            ontap: () async{
-                            
-                             await model.uploadDataToFirebase(
-                                  companyName:
-                                      companyNameController.text,
+                            ontap: () async {
+                              await model.uploadDataToFirebase(
+                                  companyName: companyNameController.text,
                                   dba: dbaController.text,
                                   contactPerson: contactPersonController.text,
                                   address: addressController.text,

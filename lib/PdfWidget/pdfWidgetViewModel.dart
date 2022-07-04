@@ -29,9 +29,10 @@ class PdfWidgetViewModel extends ChangeNotifier {
 
   pickPdf() async {
     result = await FilePicker.platform.pickFiles(
-        allowMultiple: true,
-        type: FileType.custom,
-        allowedExtensions: ['pdf', 'docx']);
+      allowMultiple: true,
+      // type: FileType.custom,
+      // allowedExtensions: ['pdf', 'docx']
+    );
     if (result == null) return;
     file = result!.files.first;
     notifyListeners();

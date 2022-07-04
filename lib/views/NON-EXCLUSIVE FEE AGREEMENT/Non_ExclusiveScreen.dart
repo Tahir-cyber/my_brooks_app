@@ -1,114 +1,177 @@
 import 'package:brooks/constants/Colors.dart';
+import 'package:brooks/views/NON-EXCLUSIVE%20FEE%20AGREEMENT/NonExclusiveFeeAgreementViewModel.dart';
 import 'package:brooks/views/ScheduleNo1Screen/ScheduleNo1Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class NonExclusiveScreen extends StatelessWidget {
+  final firstPartyCompanyNameController = TextEditingController();
+  final firstPartyAddressController = TextEditingController();
+  final firstPartyCityController = TextEditingController();
+  final firstPartyStateController = TextEditingController();
+  final firstPartyZipCodeController = TextEditingController();
+  final secondPartyNameController = TextEditingController();
+  final secondPartyAddressController = TextEditingController();
+  final secondPartyCityController = TextEditingController();
+  final secondPartyStateController = TextEditingController();
+  final secondPartyZipCodeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: CustomAppBar(
-          title: 'NON-EXCLUSIVE FEE AGREEMENT',
-          titleFontSize: 13.sp,
-        ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.w),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                NonExclusiveFeeScreenText(),
-                SizedBox(height: 20.h),
-                Text(
-                  'First Party',
-                  style: GoogleFonts.roboto(
-                    color: blueColor,
-                    fontSize: 16.sp,
+    return Consumer<NonExclusiveFeeAgreementViewModel>(
+        builder: (context, model, child) {
+      return SafeArea(
+        child: Scaffold(
+          appBar: CustomAppBar(
+            title: 'NON-EXCLUSIVE FEE AGREEMENT',
+            titleFontSize: 13.sp,
+            ontap: (){
+              Get.back();
+            
+            },
+          ),
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  NonExclusiveFeeScreenText(),
+                  SizedBox(height: 20.h),
+                  Text(
+                    'First Party',
+                    style: GoogleFonts.roboto(
+                      color: blueColor,
+                      fontSize: 16.sp,
+                    ),
                   ),
-                ),
-                SizedBox(height: 10.h),
-                SizedBox(height: 10.h),
-                CustomTextFieldWidget(
-                  title: 'My Company',
-                  hint: 'My Company Name',
-                ),
-                SizedBox(height: 10.h),
-                CustomTextFieldWidget(
-                  title: 'My Address',
-                  hint: 'Address',
-                ),
-                SizedBox(height: 10.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomTextFieldWidget(
-                      title: 'My City',
-                      hint: 'My City',
-                      width: 139.w,
-                    ),
-                    CustomTextFieldWidget(
-                      title: 'My Zip',
-                      hint: 'My Zip',
-                      width: 139.w,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.h),
-                CustomTextFieldWidget(
-                  title: 'My State',
-                  hint: 'My State',
-                ),
-                SizedBox(height: 10.h),
-                Text(
-                  'Second Party',
-                  style: GoogleFonts.roboto(
-                    color: blueColor,
-                    fontSize: 16.sp,
+                  SizedBox(height: 10.h),
+                  SizedBox(height: 10.h),
+                  CustomTextFieldWidget(
+                    controller: firstPartyCompanyNameController,
+                    title: 'My Company',
+                    hint: 'My Company Name',
                   ),
-                ),
-                SizedBox(height: 10.h),
-                CustomTextFieldWidget(
-                  title: 'Customer',
-                  hint: 'Customer Name',
-                ),
-                SizedBox(height: 10.h),
-                CustomTextFieldWidget(
-                  title: 'Customer Address',
-                  hint: 'Customer Address',
-                ),
-                SizedBox(height: 10.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomTextFieldWidget(
-                      title: 'Customer City',
-                      hint: 'Customer City',
-                      width: 139.w,
+                  SizedBox(height: 10.h),
+                  CustomTextFieldWidget(
+                    controller: firstPartyAddressController,
+                    title: 'My Address',
+                    hint: 'Address',
+                  ),
+                  SizedBox(height: 10.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomTextFieldWidget(
+                        controller: firstPartyCityController,
+                        title: 'My City',
+                        hint: 'My City',
+                        width: 139.w,
+                      ),
+                      CustomTextFieldWidget(
+                        controller: firstPartyZipCodeController,
+                        title: 'My Zip',
+                        hint: 'My Zip',
+                        width: 139.w,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10.h),
+                  CustomTextFieldWidget(
+                    controller: firstPartyStateController,
+                    title: 'My State',
+                    hint: 'My State',
+                  ),
+                  SizedBox(height: 10.h),
+                  Text(
+                    'Second Party',
+                    style: GoogleFonts.roboto(
+                      color: blueColor,
+                      fontSize: 16.sp,
                     ),
-                    CustomTextFieldWidget(
-                      title: 'Customer Zip',
-                      hint: 'Customer Zip',
-                      width: 139.w,
-                    ),
-                  ],
-                ),
-                CustomTextFieldWidget(
-                  title: 'Customer State',
-                  hint: 'Customer State',
-                ),
-                SizedBox(height: 20.h),
-                CustomSubmitButton(
-                  title: 'Submit',
-                  routeTo: ScheduleNo1Screen(),
-                ),
-                SizedBox(height: 50.h),
-              ],
+                  ),
+                  SizedBox(height: 10.h),
+                  CustomTextFieldWidget(
+                    controller: secondPartyNameController,
+                    title: 'Customer',
+                    hint: 'Customer Name',
+                  ),
+                  SizedBox(height: 10.h),
+                  CustomTextFieldWidget(
+                    controller: secondPartyAddressController,
+                    title: 'Customer Address',
+                    hint: 'Customer Address',
+                  ),
+                  SizedBox(height: 10.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomTextFieldWidget(
+                        controller: secondPartyCityController,
+                        title: 'Customer City',
+                        hint: 'Customer City',
+                        width: 139.w,
+                      ),
+                      CustomTextFieldWidget(
+                        controller: secondPartyZipCodeController,
+                        title: 'Customer Zip',
+                        hint: 'Customer Zip',
+                        width: 139.w,
+                      ),
+                    ],
+                  ),
+                  CustomTextFieldWidget(
+                    controller: secondPartyStateController,
+                    title: 'Customer State',
+                    hint: 'Customer State',
+                  ),
+                  SizedBox(height: 20.h),
+                  model.loading
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : CustomSubmitButton(
+                          title: 'Submit',
+                          ontap: () async {
+                            await model.uploadDataTofirebase(
+                                firstPartyCompanyName:
+                                    firstPartyCompanyNameController.text,
+                                firstPartyAddress:
+                                    firstPartyAddressController.text,
+                                firstPartyCity: firstPartyCityController.text,
+                                firstPartyState: firstPartyStateController.text,
+                                firstPartyZipCode:
+                                    firstPartyZipCodeController.text,
+                                secondPartyName: secondPartyNameController.text,
+                                secondPartyAddress:
+                                    secondPartyAddressController.text,
+                                secondPartyCity: secondPartyCityController.text,
+                                secondPartyState:
+                                    secondPartyStateController.text,
+                                secondPartyZipCode:
+                                    secondPartyZipCodeController.text);
+                            //clear all the controllers
+                            firstPartyCompanyNameController.clear();
+                            firstPartyAddressController.clear();
+                            firstPartyCityController.clear();
+                            firstPartyStateController.clear();
+                            firstPartyZipCodeController.clear();
+                            secondPartyNameController.clear();
+                            secondPartyAddressController.clear();
+                            secondPartyCityController.clear();
+                            secondPartyStateController.clear();
+                            secondPartyZipCodeController.clear();
+                          },
+                        ),
+                  SizedBox(height: 50.h),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 

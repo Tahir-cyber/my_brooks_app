@@ -1,5 +1,6 @@
 String celebrityScheduleDate = 'DD/MM/YYYY';
 String celebrityScheduleDate2 = 'DD/MM/YYYY';
+String creditRealseScreen = 'DD/MM/YYYY';
 // DateFormat('EEE, MMM d, ' 'yyyy').format(DateTime.now());
 
 class CelebritySchedule {

@@ -1,7 +1,6 @@
 import 'package:brooks/constants/Colors.dart';
 import 'package:brooks/views/FinancialStatement/1_financialStatement/1_financialStatementViewModel.dart';
 import 'package:brooks/views/ScheduleNo1Screen/ScheduleNo1Screen.dart';
-import 'package:brooks/views/ScheduleNo1Screen/ScheduleScreenModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -134,7 +133,8 @@ class _FinancialStatementScreen_1State
                     titleFontSize: 10.sp,
                   ),
                   SizedBox(height: 10.h),
-                  AgreementDateWidget(
+                  AgreementDateWidget3(
+                    state: 1,
                     title: 'Date of Birth',
                     titleColor: blackColor,
                   ),
@@ -191,7 +191,7 @@ class _FinancialStatementScreen_1State
                               homeAdress: homeAddressController.text,
                               homePhoneNo: homePhoneNumberController.text,
                               socialSecurityNo: socialSecurityNoController.text,
-                              dateOfBirth: celebrityScheduleDate,
+                              dateOfBirth: fnstatementDate,
                               nameAndPhoneOfYourAccountant:
                                   nameAndPhoneOfYourAccountantController.text,
                               nameAndPhoneOfYourAttorny:
@@ -217,8 +217,8 @@ class _FinancialStatementScreen_1State
                             nameAndPhoneOfYourAccountantController.clear();
                             nameAndPhoneOfYourAttornyController.clear();
                             nameAndPhoneNumberOfYourBrokerController.clear();
-                            nameAndPhoneNumberOfYourinsuranceAdviController.clear();
-                            
+                            nameAndPhoneNumberOfYourinsuranceAdviController
+                                .clear();
                           },
                         ),
                   SizedBox(height: 100.h),

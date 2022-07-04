@@ -2,17 +2,16 @@ import 'package:brooks/views/FinancialStatement/8_FinancialStatement/8_Financial
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FinancialStatementViewModel7 extends ChangeNotifier {
   bool loading = false;
 
   uploadData7({
     required String notesPayableToBank,
-    
     required String secured,
     required String notSecured,
     required String notesPayableToOthers,
-    
     required String secured2,
     required String notSecured2,
     required String accountspayable,
@@ -25,10 +24,15 @@ class FinancialStatementViewModel7 extends ChangeNotifier {
     required String lifeInsuranceLoan,
     required String otherLiability,
     required String otherAssets,
-  }) async{
+  }) async {
     loading = true;
     notifyListeners();
-    await FirebaseFirestore.instance.collection("financialStatement7").add({
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await FirebaseFirestore.instance
+        .collection("LoanForm")
+        .doc("${pref.getString("uid")}")
+        .collection("FnStatementBalanceSheet2")
+        .add({
       "notesPayableToBank": notesPayableToBank,
       "secured": secured,
       "notSecured": notSecured,
@@ -50,6 +54,5 @@ class FinancialStatementViewModel7 extends ChangeNotifier {
     });
     loading = false;
     notifyListeners();
-    
   }
 }

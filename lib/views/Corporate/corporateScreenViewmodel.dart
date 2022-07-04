@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final userId = FirebaseAuth.instance.currentUser!.uid;
 
@@ -25,7 +26,12 @@ class CorporateViewModel extends ChangeNotifier {
       required String ownerShip4}) async {
     loading = true;
     notifyListeners();
-    await FirebaseFirestore.instance.collection("Corporatescreen").add({
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await FirebaseFirestore.instance
+        .collection("LoanForm")
+        .doc("${pref.getString("uid")}")
+        .collection("corporate")
+        .add({
       "name1": name1,
       "title1": title1,
       "ownerShip1": ownerShip1,
@@ -39,14 +45,6 @@ class CorporateViewModel extends ChangeNotifier {
       "title4": title4,
       "ownerShip4": ownerShip4,
       "userId": userId,
-    }).then((value) async {
-      docIdd = value.id;
-      FirebaseFirestore.instance
-          .collection("Corporatescreen")
-          .doc(docIdd)
-          .update({
-        "docId": docIdd,
-      });
     }).then((value) => {Get.to(CommercialRealEstateChecklistScreen())});
     loading = false;
     notifyListeners();

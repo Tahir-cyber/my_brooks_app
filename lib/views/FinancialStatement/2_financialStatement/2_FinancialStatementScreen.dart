@@ -1,7 +1,6 @@
 import 'package:brooks/constants/Colors.dart';
 import 'package:brooks/views/FinancialStatement/2_financialStatement/2_financialStatementViewModel.dart';
 import 'package:brooks/views/ScheduleNo1Screen/ScheduleNo1Screen.dart';
-import 'package:brooks/views/ScheduleNo1Screen/ScheduleScreenModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -192,7 +191,7 @@ class _FinancialStatementScreen_2State
                                 homePhoneNo: homePhoneNumberController.text,
                                 socialSecurityNo:
                                     socialSecurityNoController.text,
-                                dateOfBirth: celebrityScheduleDate,
+                                dateOfBirth: fnstatementDate2,
                                 nameAndPhoneOfYourAccountant:
                                     nameAndPhoneOfYourAccountantController.text,
                                 nameAndPhoneOfYourAttorny:

@@ -126,19 +126,22 @@ class _FinancialStatementScreen_5State
                       : CustomSubmitButton(
                           title: 'CONTINUE',
                           ontap: () async {
-                            setState(() {
-                              loading = true;
-                            });
-                            await pdfModel.uploadPdfFile();
-                            await model.uploadData(
-                                yesNo: YesNoButton, PdfUrl: pdfModel.pdfUrl!);
+                            try {
+                              setState(() {
+                                loading = true;
+                              });
+                              await pdfModel.uploadPdfFile();
+                              await model.uploadData(
+                                  yesNo: YesNoButton, PdfUrl: pdfModel.pdfUrl!);
 
-                            pdfModel.file = null;
-                            setState(() {
-                              loading = false;
-                            });
-                          },
-                        ),
+                              pdfModel.file = null;
+                            } catch (e) {
+                              setState(() {
+                                loading = false;
+                              });
+                              print(e);
+                            }
+                          }),
                   SizedBox(height: 100.h),
                 ],
               ),

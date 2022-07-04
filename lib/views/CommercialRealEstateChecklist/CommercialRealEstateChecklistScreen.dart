@@ -46,7 +46,9 @@ class CommercialRealEstateChecklistScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   child: CustomSubmitButton(
                     title: 'GET STARTED',
-                    routeTo: FinancialStatementScreen_1(),
+                    ontap: () {
+                      Get.to(FinancialStatementScreen_1());
+                    },
                   ),
                 ),
                 SizedBox(height: 100.h),

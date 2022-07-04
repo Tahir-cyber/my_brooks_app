@@ -692,6 +692,9 @@ class _CommercialRealEstateScreenState
                             await model.uploadPdfFile(5);
                             await model.uploadPdfFile(6);
                             await model.uploadPdfFile(7);
+                            await model.uploadToFirebaseInArray();
+
+                           
                             setState(() {
                               loading = false;
                             });

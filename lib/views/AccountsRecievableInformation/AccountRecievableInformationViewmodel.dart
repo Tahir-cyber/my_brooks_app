@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountRecievableInformationViewmodel extends ChangeNotifier {
   String value = "Goods";
@@ -37,7 +38,12 @@ class AccountRecievableInformationViewmodel extends ChangeNotifier {
       required String lenderAmount}) async {
     loading = true;
     notifyListeners();
-    await FirebaseFirestore.instance.collection("LoanForm").doc(docId).update({
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await FirebaseFirestore.instance
+        .collection("LoanForm")
+        .doc("${pref.getString("uid")}")
+        .collection("accountreceivableinformation")
+        .add({
       "Receivables generated from sale of": recivableGeneratedSale,
       "Number of Active Customers:": NoOfActiveCustomer,
       "Number of invoices per month:": NumberOfInvPerMonth,

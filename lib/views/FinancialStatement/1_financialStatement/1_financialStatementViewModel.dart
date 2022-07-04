@@ -3,6 +3,7 @@ import 'package:brooks/views/FinancialStatement/2_financialStatement/2_Financial
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FinancialStatementViewModel1 extends ChangeNotifier {
   bool loading = false;
@@ -26,7 +27,12 @@ class FinancialStatementViewModel1 extends ChangeNotifier {
       required String nameAndPhoneOfYourInsuranceAdvisor}) async {
     loading = true;
     notifyListeners();
-    await FirebaseFirestore.instance.collection("personalinformation1").add({
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await FirebaseFirestore.instance
+        .collection("LoanForm")
+        .doc("${pref.getString("uid")}")
+        .collection("FnStamentPersInfo")
+        .add({
       "applicantName": applicantName,
       "employeer": employeer,
       "adressOfEmployeer": adressOfEmployeer,
@@ -43,15 +49,7 @@ class FinancialStatementViewModel1 extends ChangeNotifier {
       "nameAndPhoneOfYourAttorny": nameAndPhoneOfYourAttorny,
       "nameAndPhoneOfYourbroker": nameAndPhoneOfYourbroker,
       "nameAndPhoneOfYourInsuranceAdvisor": nameAndPhoneOfYourInsuranceAdvisor,
-      
       "userId": userId,
-    }).then((value) async {
-      await FirebaseFirestore.instance
-          .collection("FinancialStatement1")
-          .doc(value.id)
-          .update({
-        "docId": value.id,
-      });
     }).then((value) {
       Get.to(FinancialStatementScreen_2());
     });

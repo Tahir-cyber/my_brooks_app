@@ -3,6 +3,7 @@ import 'package:brooks/views/ScheduleNo1Screen/ScheduleNo1Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +34,10 @@ class FinancialStatementScreen_7 extends StatelessWidget {
         builder: (context, model, child) {
       return SafeArea(
         child: Scaffold(
-          appBar: CustomAppBar(title: 'Financial Statement'),
+          appBar: CustomAppBar(title: 'Financial Statement',ontap: (){
+            Get.back();
+          
+          },),
           body: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),

@@ -5,17 +5,24 @@ import 'package:brooks/views/RepresentationsandWarranties/RepresentationsAndWarr
 import 'package:brooks/views/ScheduleNo1Screen/AgreementDateWidget.dart';
 import 'package:brooks/views/ScheduleNo1Screen/ScheduleNo1Screen.dart';
 import 'package:brooks/views/ScheduleNo1Screen/ScheduleScreenModel.dart';
+import 'package:brooks/views/SgnaturWidget/SignatureWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class RepresentationsAndWarrantiesScreen extends StatelessWidget {
+class RepresentationsAndWarrantiesScreen extends StatefulWidget {
+  @override
+  State<RepresentationsAndWarrantiesScreen> createState() =>
+      _RepresentationsAndWarrantiesScreenState();
+}
+
+class _RepresentationsAndWarrantiesScreenState
+    extends State<RepresentationsAndWarrantiesScreen> {
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
-    String date = 'DD/MM/YYYY';
-    String date2 = 'DD/MM/YYYY';
     return Consumer<RepresentationsAndWarrantiesViewModel>(
         builder: (context, model, child) {
       return SafeArea(
@@ -70,11 +77,29 @@ class RepresentationsAndWarrantiesScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CustomTextFieldWidget(
-                            hint: '',
-                            title: 'Your Signature',
-                            width: 150.w,
-                            height: 60.h,
+                          GestureDetector(
+                            onTap: () {
+                              Get.defaultDialog(
+                                backgroundColor: Colors.white,
+                                title: "Draw Yor Signature Here",
+                                content: Container(
+                                  color: Colors.white,
+                                  height: 300.h,
+                                  width: 300.w,
+                                  child: Column(
+                                    children: [
+                                      model.signWidget(),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: SignatureWidget(
+                              signature: model.exportedImage,
+                              title: 'Your Signature',
+                              width: 150.w,
+                              height: 60.h,
+                            ),
                           ),
                           Text(
                             'Draw Your signature above',
@@ -99,11 +124,29 @@ class RepresentationsAndWarrantiesScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CustomTextFieldWidget(
-                            hint: '',
-                            title: 'Co-Applicant\'s Signature',
-                            width: 150.w,
-                            height: 60.h,
+                          GestureDetector(
+                            onTap: () {
+                              Get.defaultDialog(
+                                backgroundColor: Colors.white,
+                                title: "Draw Yor Signature Here",
+                                content: Container(
+                                  color: Colors.white,
+                                  height: 300.h,
+                                  width: 300.w,
+                                  child: Column(
+                                    children: [
+                                      model.signWidget2(),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: SignatureWidget(
+                              signature: model.exportedImage2,
+                              title: 'Your Signature',
+                              width: 150.w,
+                              height: 60.h,
+                            ),
                           ),
                           Text(
                             'Draw Your signature above',
@@ -123,7 +166,7 @@ class RepresentationsAndWarrantiesScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 20.h),
-                  model.loading
+                  loading
                       ? Center(
                           child: CircularProgressIndicator(),
                         )
@@ -133,10 +176,29 @@ class RepresentationsAndWarrantiesScreen extends StatelessWidget {
                             log("$celebrityScheduleDate");
                             log("$celebrityScheduleDate2");
                             log("$celebrityScheduleDate2");
-                            await model.uploadData(
-                                yourSignatureDate: celebrityScheduleDate,
-                                coApplicantSignatureDate:
-                                    celebrityScheduleDate2);
+                            setState(() {
+                              loading = true;
+                            });
+                            try {
+                              await model.storeSignatureUrl();
+                              await model.storeSignatureUrl2();
+                              await model.uploadData(
+                                  yourSignatureDate: celebrityScheduleDate,
+                                  coApplicantSignatureDate:
+                                      celebrityScheduleDate2);
+                            } catch (e) {
+                              setState(() {
+                                loading = false;
+                              });
+
+                              log(e.toString());
+                            }
+
+                            //clear fileds
+                            celebrityScheduleDate = "DD/MM/YYYY";
+                            celebrityScheduleDate2 = "DD/MM/YYYY";
+                            model.exportedImage = null;
+                            model.exportedImage2 = null;
                           },
                         ),
                   SizedBox(height: 100.h),
